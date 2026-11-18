@@ -78,7 +78,26 @@ Le codage n'a pris que 2 minutes (contre 10 budgétées) : de la marge subsiste.
 - **Étapes ajoutées à la démo** : aucune de nouvelle — un ajustement a été nécessaire sur les étapes existantes (voir bilan).
 - **Bilan** : Codage réel : 2 minutes + 1 minute de correctif (texte/sémantique), bien sous le budget de 10. Les 3 critères d'acceptation sont satisfaits : bandeau héros bleu + cartes KPI + cartes donateur conformes à `page1A.png`/`page1B.png` ; bandeau héros + carte « Historique de don » conformes à `page2.png` (comparaison directe par capture d'écran Playwright, voir ci-dessous) ; aucune information affichée n'a changé, seul le style. Écart imprévu : le titre du bandeau héros reprend le texte exact du prototype (« Donateurs inactifs », pas « Donateurs à réactiver ») et doit rester un titre sémantique (`<h2>`) — la démo Playwright s'appuyait sur l'ancien texte/la perte du rôle `heading`, corrigée dans la foulée. Aucun test métier nouveau (pur CSS/balisage, conforme à la DoD) ; `npm test` passe toujours (2 api + 5 frontend, inchangé). Contrat de déployabilité : aucune borne, aucune alarme. Police Poppins ajoutée via `next/font/google` (remplace Geist, plus utilisé). Déployé (nouvelle image frontend) et vérifié visuellement par capture d'écran Playwright contre les maquettes. Commité et poussé. Version 3 signalée à PM Lab (`moteur_avance: false`). Rien de reporté.
 
-## Itération 4 : La responsable collecte prépare la séquence du cycle court
+## Itération 4 : Le vrai logo d'Imagine for Margo remplace l'icône provisoire
+
+**Temps restant annoncé au début de cette itération** : 40 minutes. Capacité large (20 min minimum nécessaires, codage estimé à 5 min).
+
+⚠️ **Insérée à la demande du développeur**, hors plan initial, priorisée devant la séquence du cycle (repoussée en itération 5). Le fichier `/srv/team34/logo/logo.png` porte le logo officiel (papillon rose + mot-symbole « Imagine for Margo · Children without CANCER »), à la place de l'icône SVG provisoire du bandeau supérieur.
+
+- **Dans le périmètre** : remplacer le composant `LogoI4M` (SVG inline) par le vrai logo (`frontend/public/logo.png`, via `next/image` ou `<img>`) dans le bandeau supérieur de l'écran liste et de la vue 360.
+- **Hors périmètre** : favicon, toute autre apparition du logo (écrans à venir), retouche du fichier image fourni.
+- **Critères d'acceptation** :
+  - Étant donné l'écran liste, quand le bandeau supérieur s'affiche, alors le vrai logo apparaît à la place de l'icône provisoire.
+  - Étant donné la vue 360, quand le bandeau supérieur s'affiche, alors le même logo apparaît.
+  - Étant donné le logo affiché, quand on compare à `logo/logo.png`, alors il n'est ni déformé ni rogné de façon illisible.
+- **Hypothèse de l'équipe couverte** : aucune — tâche graphique.
+- **Codage estimé** : 5 minutes.
+- **Fichiers prévus** : `frontend/public/logo.png` (copié depuis `/srv/team34/logo/logo.png`), `frontend/src/app/page.tsx`, `frontend/src/app/donateur/[id]/page.tsx`, ajustement CSS du bandeau si besoin (≈4 fichiers).
+- **Tests unitaires prévus** : aucun (pur balisage/asset, DoD section 8 : « pas de test sur du balisage pur »).
+- **Étapes ajoutées à la démo** : aucune.
+- **Bilan** : Codage réel : 1 minute, très en dessous du budget de 5. Les 3 critères d'acceptation sont satisfaits : le vrai logo (papillon + mot-symbole) remplace l'icône SVG sur l'écran liste et la vue 360 (vérifié par capture d'écran) ; proportions respectées (`next/image`, 72×36, ratio conservé, pas de déformation ni rognage). Aucun test métier nouveau (pur asset/balisage). `npm test` inchangé (2 api + 5 frontend). Contrat de déployabilité : aucune borne, aucune alarme. Déployé et vérifié (200 sur `/health`/`/sante`, démo Playwright toujours verte). Commité et poussé. Version 4 signalée à PM Lab (`moteur_avance: false`). Rien de reporté.
+
+## Itération 5 : La responsable collecte prépare la séquence du cycle court
 
 - **Dans le périmètre** :
   - Depuis la vue 360, un lien « Préparer le cycle de réactivation » vers une nouvelle page `screen-3` du prototype : les 2 contacts (bilan d'impact à J+0, invitation unique à J+21), la mention événementielle si le donateur est habitué des événements caritatifs, la règle d'arrêt explicite.
@@ -97,6 +116,6 @@ Le codage n'a pris que 2 minutes (contre 10 budgétées) : de la marge subsiste.
 
 ## À venir (non détaillé, ordre de priorité du plan de livraison de l'équipe)
 
-1. Écran 4 : confirmation du lancement du cycle, isolation du flux général, 3 indicateurs de mesure (envois/6 semaines, envois après invitation, outils consultés) — `screen-4` du prototype.
+1. Écran 4 (confirmation) : isolation du flux général, 3 indicateurs de mesure (envois/6 semaines, envois après invitation, outils consultés) — `screen-4` du prototype.
 2. Sélecteur de persona complet (si un rôle autre que « Responsable collecte » devient nécessaire à l'écran).
 3. Stabilisation finale pour le pitch, si le temps restant ne permet plus qu'une itération.
