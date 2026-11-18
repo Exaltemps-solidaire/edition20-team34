@@ -184,3 +184,22 @@ Basée sur la maquette `page4.png` (`screen-4` du prototype).
 
 1. Sélecteur de persona complet (si un rôle autre que « Responsable collecte » devient nécessaire à l'écran).
 2. Stabilisation finale pour le pitch, si le temps restant ne permet plus qu'une itération.
+
+## Itération 9 : Les boutons (CTA) ont une taille standard, toujours centrés
+
+**Temps restant annoncé au début de cette itération** : 20 minutes. Capacité suffisante (20 min minimum nécessaires, pile).
+
+⚠️ **Insérée à la demande du développeur**, hors plan initial : `.btnPrimary`/`.btnSecondary` sont en `width: 100%`, ce qui les rend démesurés sur les conteneurs élargis par l'itération 8 (tablette/desktop).
+
+- **Dans le périmètre** : `frontend/src/app/page.module.css` — les boutons passent en largeur naturelle (contenu + marge), centrés horizontalement dans leur écran, sur les 4 écrans (liste n'en a pas, vue 360, cycle, confirmation).
+- **Hors périmètre** : changement de couleur, de texte ou de comportement des boutons.
+- **Critères d'acceptation** :
+  - Étant donné un bouton primaire ou secondaire, quand il s'affiche, alors sa largeur s'ajuste à son texte (pas toute la largeur du conteneur).
+  - Étant donné n'importe quel écran, quand un bouton s'affiche, alors il reste centré horizontalement.
+  - Étant donné un viewport mobile, tablette ou desktop, quand un bouton s'affiche, alors il reste lisible (pas trop petit, pas collé au texte).
+- **Hypothèse de l'équipe couverte** : aucune — confort visuel.
+- **Codage estimé** : 5 minutes.
+- **Fichiers prévus** : `frontend/src/app/page.module.css` (1 fichier).
+- **Tests unitaires prévus** : aucun (pur CSS).
+- **Étapes ajoutées à la démo** : aucune.
+- **Bilan** : Codage réel : 1 minute, bien sous le budget de 5. Les 3 critères d'acceptation sont satisfaits : boutons en largeur naturelle (min 220px), centrés via `align-self: center` sur les 4 écrans concernés, vérifié par capture d'écran mobile (390px) et desktop (1280px). Aucun test (pur CSS). `npm test` inchangé (2 api + 9 frontend). Contrat de déployabilité : aucune borne, aucune alarme. Démo Playwright inchangée et toujours verte. Commité, poussé, version 9 signalée à PM Lab (`moteur_avance: false`). Rien de reporté.
