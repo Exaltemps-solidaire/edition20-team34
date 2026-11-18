@@ -2,6 +2,12 @@ export type StatutDonateur =
   | { type: "inactif"; moisInactivite: number }
   | { type: "enCours"; jour: number };
 
+export type Historique = {
+  nombreDons: number;
+  donMoyen: number;
+  premierDon: string;
+};
+
 export type Donateur = {
   id: string;
   nom: string;
@@ -10,6 +16,7 @@ export type Donateur = {
   source: string;
   raison: string;
   statut: StatutDonateur;
+  historique: Historique;
 };
 
 export const SEUIL_MOIS_INACTIVITE = 13;
@@ -24,6 +31,7 @@ export const donateurs: Donateur[] = [
     source: "ESC Saint-Cloud",
     raison: "Participation à la course ESC en tant que coureuse",
     statut: { type: "inactif", moisInactivite: 26 },
+    historique: { nombreDons: 3, donMoyen: 25, premierDon: "sept. 2021" },
   },
   {
     id: "thomas-lefevre",
@@ -33,6 +41,7 @@ export const donateurs: Donateur[] = [
     source: "Campagne fin d'année",
     raison: "Sollicitation campagne de fin d'année (CFA)",
     statut: { type: "inactif", moisInactivite: 25 },
+    historique: { nombreDons: 2, donMoyen: 40, premierDon: "oct. 2023" },
   },
   {
     id: "marie-rousseau",
@@ -42,6 +51,7 @@ export const donateurs: Donateur[] = [
     source: "Rallye du Cœur Lyon",
     raison: "Proche impliqué dans le Rallye du Cœur",
     statut: { type: "enCours", jour: 5 },
+    historique: { nombreDons: 5, donMoyen: 30, premierDon: "mars 2022" },
   },
   {
     id: "philippe-dupont",
@@ -51,6 +61,7 @@ export const donateurs: Donateur[] = [
     source: "Don en ligne direct",
     raison: "Don spontané suite à Septembre en or",
     statut: { type: "inactif", moisInactivite: 18 },
+    historique: { nombreDons: 1, donMoyen: 50, premierDon: "juil. 2024" },
   },
 ];
 
@@ -63,4 +74,12 @@ export function libelleStatut(statut: StatutDonateur): string {
     return `Cycle en cours — J+${statut.jour}`;
   }
   return `${statut.moisInactivite} mois d'inactivité`;
+}
+
+export function trouverDonateur(id: string): Donateur | undefined {
+  return donateurs.find((donateur) => donateur.id === id);
+}
+
+export function montantCumule(historique: Historique): number {
+  return historique.nombreDons * historique.donMoyen;
 }

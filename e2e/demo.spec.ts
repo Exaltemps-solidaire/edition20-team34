@@ -12,4 +12,12 @@ test("Démo : le cas passant", async ({ page }) => {
     await expect(page.getByText("Claire Beaumont")).toBeVisible();
     await expect(page.getByText("Cycle en cours")).toBeVisible();
   });
+
+  await test.step("Je consulte la vue 360 d'un donateur", async () => {
+    await page.getByText("Claire Beaumont").click();
+    await expect(page.getByRole("heading", { name: "Claire Beaumont", exact: true })).toBeVisible();
+    await expect(page.getByText("Montant cumulé")).toBeVisible();
+    await page.getByText("Retour").click();
+    await expect(page.getByRole("heading", { name: "Donateurs à réactiver" })).toBeVisible();
+  });
 });
