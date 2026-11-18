@@ -33,6 +33,8 @@
 
 ## Itération 2 : La responsable collecte consulte la vue 360 d'un donateur sélectionné
 
+**Temps restant annoncé au début de cette itération** : 50 minutes. Capacité large pour cette itération (25 min minimum nécessaires).
+
 - **Dans le périmètre** :
   - Navigation depuis la liste (écran 1) vers la vue 360 (écran 2, `screen-2` du prototype) du donateur cliqué.
   - Vue 360 : identité, historique de don résumé (nombre de dons, dernier don, raison, source), statut d'isolation du flux général, lien retour vers la liste.
@@ -46,7 +48,7 @@
 - **Fichiers prévus** : nouvelle route/page `frontend/src/app/donateur/[id]/page.tsx` (ou équivalent), extension de `frontend/src/lib/donateurs.ts`, lien depuis `page.tsx` (≈4 fichiers).
 - **Tests unitaires prévus** : 1 à 3, sur la sélection du donateur par identifiant et/ou le calcul du statut d'isolation.
 - **Étapes ajoutées à la démo** : depuis la liste, cliquer un donateur, vérifier l'affichage de sa vue 360, revenir à la liste.
-- **Bilan** : _à remplir en fin d'itération (durée de codage réelle, dépassement éventuel, fait, reporté)_
+- **Bilan** : Codage réel : 2 minutes, bien sous le budget de 10 (pas de dépassement). Les 3 critères d'acceptation sont satisfaits : clic depuis la liste → vue 360 (nom, dernier don, raison) ; lien « Retour » → liste ; message d'isolation affiché pour chaque donateur. La frise d'événements et les paragraphes d'impact détaillés du prototype ont été simplifiés (✂️ prévu au plan) : remplacés par un résumé d'historique (nombre de dons, montant cumulé, premier don). 2 tests Vitest ajoutés (`trouverDonateur`, `montantCumule`), `npm test` passe (2 api + 5 frontend). Contrat de déployabilité : aucune borne, aucune alarme. Export statique Next.js vérifié : `generateStaticParams` génère bien les 4 pages `/donateur/<id>`, servies correctement par nginx (`try_files` déjà en place). Déployé (nouvelle image frontend construite, publiée, `podman compose up -d --force-recreate`) et vérifié (200 sur `/health`, `/sante`, et sur une vue 360). Démo Playwright étendue d'une étape (clic → vue 360 → retour), un ajustement nécessaire (`getByRole heading` ambigu entre le topbar et le titre, corrigé avec `exact: true`). Commité et poussé. Version 2 signalée à PM Lab (`moteur_avance: false`). Rien de reporté.
 
 ---
 
@@ -54,9 +56,25 @@
 
 Le codage n'a pris que 2 minutes (contre 10 budgétées) : de la marge subsiste. L'itération 2 (vue 360 du donateur), déjà détaillée ci-dessus, reste le prochain objectif proposé, sans changement de priorité. Le temps restant sera redemandé au début de `/iteration 2`, comme le prévoit la section 8.
 
+## Itération 3 : La responsable collecte prépare la séquence du cycle court
+
+- **Dans le périmètre** :
+  - Depuis la vue 360, un lien « Préparer le cycle de réactivation » vers une nouvelle page `screen-3` du prototype : les 2 contacts (bilan d'impact à J+0, invitation unique à J+21), la mention événementielle si le donateur est habitué des événements caritatifs, la règle d'arrêt explicite.
+  - Les messages sont affichés tels quels (non éditables dans cette itération, budget oblige — l'édition est hors périmètre, à signaler si l'équipe la demande).
+- **Hors périmètre** : l'édition des messages, l'agenda des événements (lien externe), la confirmation du lancement (écran 4), tout envoi réel.
+- **Critères d'acceptation** :
+  - Étant donné la vue 360 d'un donateur, quand on clique « Préparer le cycle de réactivation », alors la séquence des 2 contacts s'affiche (J+0 et J+21).
+  - Étant donné un donateur habitué des événements caritatifs, quand la séquence s'affiche, alors le message 2 porte la mention événementielle ; sinon elle n'apparaît pas.
+  - Étant donné la séquence affichée, quand on la consulte, alors la règle d'arrêt (0 envoi après l'invitation, pas de réintégration au flux général) est visible.
+- **Hypothèse de l'équipe couverte** : prépare la mesure de H3 (la séquence ne dépasse pas 2 envois) — l'indicateur réel sera affiché à l'écran 4 de confirmation.
+- **Codage estimé** : 10 minutes.
+- **Fichiers prévus** : `frontend/src/app/donateur/[id]/cycle/page.tsx`, extension de `frontend/src/lib/donateurs.ts` (champ « habitué des événements », fonction de décision), lien depuis la vue 360 (≈3 fichiers).
+- **Tests unitaires prévus** : 1 à 3, sur la règle d'affichage de la mention événementielle.
+- **Étapes ajoutées à la démo** : depuis la vue 360, cliquer « Préparer le cycle », vérifier l'affichage des 2 contacts et de la règle d'arrêt.
+- **Bilan** : _à remplir en fin d'itération (durée de codage réelle, dépassement éventuel, fait, reporté)_
+
 ## À venir (non détaillé, ordre de priorité du plan de livraison de l'équipe)
 
-1. Écran 3 : séquence du cycle court (bilan d'impact à J+0, invitation unique à J+21, mention événementielle si applicable, règle d'arrêt explicite) — `screen-3` du prototype.
-2. Écran 4 : confirmation du lancement du cycle, isolation du flux général, 3 indicateurs de mesure (envois/6 semaines, envois après invitation, outils consultés) — `screen-4` du prototype.
-3. Sélecteur de persona complet (si un rôle autre que « Responsable collecte » devient nécessaire à l'écran).
-4. Stabilisation finale pour le pitch, si le temps restant ne permet plus qu'une itération.
+1. Écran 4 : confirmation du lancement du cycle, isolation du flux général, 3 indicateurs de mesure (envois/6 semaines, envois après invitation, outils consultés) — `screen-4` du prototype.
+2. Sélecteur de persona complet (si un rôle autre que « Responsable collecte » devient nécessaire à l'écran).
+3. Stabilisation finale pour le pitch, si le temps restant ne permet plus qu'une itération.
