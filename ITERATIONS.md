@@ -161,6 +161,25 @@ Basée sur la maquette `page4.png` (`screen-4` du prototype).
 
 **Les 4 écrans du prototype retenu sont maintenant construits** (liste, vue 360, séquence du cycle, confirmation), avec la charte graphique et le logo officiel.
 
+## Itération 8 : L'application s'adapte aux écrans tablette et desktop
+
+**Temps restant annoncé au début de cette itération** : 25 minutes. ✂️ Correspond exactement au minimum (10 codage + 5 publication + 10 tour de test), sans marge — probablement la dernière itération de ce build.
+
+⚠️ **Insérée à la demande du développeur**, hors plan initial : les 4 écrans sont aujourd'hui une carte mobile (max 420px) centrée sur fond pâle, quelle que soit la taille de l'écran. ⚠️ Touche les 4 écrans à la fois (dépasse la règle des « 2 écrans modifiés au plus »), mais via un seul fichier structurant partagé (`page.module.css`) : changement mécanique identique partout (points de rupture CSS), pas 4 décisions de design séparées — je le signale plutôt que de le découper artificiellement en 4 itérations creuses.
+
+- **Dans le périmètre** : points de rupture (media queries) pour tablette (~768px) et desktop (~1280px) sur `frontend/src/app/page.module.css` : largeur du conteneur, et réorganisation en grille de ce qui s'y prête (ex. la liste des donateurs en 2 colonnes sur desktop) sans changer l'information affichée.
+- **Hors périmètre** : navigation desktop spécifique (menu latéral, etc.), redesign visuel au-delà de l'adaptation des largeurs/grilles.
+- **Critères d'acceptation** :
+  - Étant donné un viewport mobile (~390px), quand on affiche n'importe quel écran, alors le rendu est inchangé par rapport à maintenant.
+  - Étant donné un viewport desktop (≥1280px), quand on affiche la liste ou la vue 360, alors le contenu utilise une largeur plus confortable qu'une carte de 420px centrée dans le vide, sans défilement horizontal.
+  - Étant donné un viewport tablette (~768px), quand on affiche n'importe lequel des 4 écrans, alors aucun élément ne se chevauche ni ne déborde.
+- **Hypothèse de l'équipe couverte** : aucune — confort d'usage, pas un critère mesuré par l'équipe.
+- **Codage estimé** : 10 minutes.
+- **Fichiers prévus** : `frontend/src/app/page.module.css`, éventuellement `frontend/src/app/globals.css` (≈2 fichiers).
+- **Tests unitaires prévus** : aucun (pur CSS, DoD section 8 : « pas de test sur du balisage pur »).
+- **Étapes ajoutées à la démo** : aucune (pas de nouveau parcours, un seul visuel).
+- **Bilan** : Codage réel : 1 minute, bien sous le budget de 10. Les 3 critères d'acceptation sont satisfaits, vérifiés par capture d'écran à 390px (inchangé), 768px (carte flottante centrée, liste en 2 colonnes, rien ne déborde) et 1280px (conteneur élargi à 1040px, aucun défilement horizontal). Aucun test unitaire (pur CSS, conforme à la DoD). `npm test` inchangé (2 api + 9 frontend). Contrat de déployabilité : aucune borne, aucune alarme. Démo Playwright inchangée et toujours verte. Commité, poussé, version 8 signalée à PM Lab (`moteur_avance: false`). Rien de reporté.
+
 ## À venir (non détaillé, ordre de priorité du plan de livraison de l'équipe)
 
 1. Sélecteur de persona complet (si un rôle autre que « Responsable collecte » devient nécessaire à l'écran).
