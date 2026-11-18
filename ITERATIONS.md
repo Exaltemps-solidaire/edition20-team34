@@ -99,23 +99,61 @@ Le codage n'a pris que 2 minutes (contre 10 budgétées) : de la marge subsiste.
 
 ## Itération 5 : La responsable collecte prépare la séquence du cycle court
 
+**Temps restant annoncé au début de cette itération** : 35 minutes. ✂️ Ne suffit pas pour les itérations 6 et 7 à la suite (25 min minimum chacune) : à réévaluer après celle-ci.
+
+⚠️ **Maquettes `page3A.png`/`page3B.png` reçues** depuis la planification de cette itération : elles confirment le détail déjà prévu (étapes 1/attente/2/fin, règle d'arrêt, message 1 et message 2, lien agenda) et donnent le texte exact à reprendre.
+
 - **Dans le périmètre** :
   - Depuis la vue 360, un lien « Préparer le cycle de réactivation » vers une nouvelle page `screen-3` du prototype : les 2 contacts (bilan d'impact à J+0, invitation unique à J+21), la mention événementielle si le donateur est habitué des événements caritatifs, la règle d'arrêt explicite.
-  - Les messages sont affichés tels quels (non éditables dans cette itération, budget oblige — l'édition est hors périmètre, à signaler si l'équipe la demande).
-- **Hors périmètre** : l'édition des messages, l'agenda des événements (lien externe), la confirmation du lancement (écran 4), tout envoi réel.
+  - Les 2 messages (aperçu), avec un texte généré à partir des données du donateur (nom, raison, source) — non éditables dans cette itération.
+  - Le lien vers l'agenda des événements (texte seulement, pas d'appel réseau).
+- **Hors périmètre** : l'édition des messages, la confirmation du lancement (écran 4, itération 7).
 - **Critères d'acceptation** :
-  - Étant donné la vue 360 d'un donateur, quand on clique « Préparer le cycle de réactivation », alors la séquence des 2 contacts s'affiche (J+0 et J+21).
+  - Étant donné la vue 360 d'un donateur, quand on clique « Préparer le cycle de réactivation », alors la séquence des 2 contacts s'affiche (J+0 et J+21) avec la règle d'arrêt.
   - Étant donné un donateur habitué des événements caritatifs, quand la séquence s'affiche, alors le message 2 porte la mention événementielle ; sinon elle n'apparaît pas.
-  - Étant donné la séquence affichée, quand on la consulte, alors la règle d'arrêt (0 envoi après l'invitation, pas de réintégration au flux général) est visible.
+  - Étant donné la séquence affichée, quand on clique « Valider et lancer le cycle », alors on est dirigé vers l'écran de confirmation (même si celui-ci est encore minimal avant l'itération 7).
 - **Hypothèse de l'équipe couverte** : prépare la mesure de H3 (la séquence ne dépasse pas 2 envois) — l'indicateur réel sera affiché à l'écran 4 de confirmation.
 - **Codage estimé** : 10 minutes.
-- **Fichiers prévus** : `frontend/src/app/donateur/[id]/cycle/page.tsx`, extension de `frontend/src/lib/donateurs.ts` (champ « habitué des événements », fonction de décision), lien depuis la vue 360 (≈3 fichiers).
+- **Fichiers prévus** : `frontend/src/app/donateur/[id]/cycle/page.tsx`, extension de `frontend/src/lib/donateurs.ts` (champ « habitué des événements », fonction de décision et de message), lien depuis la vue 360 (≈3 fichiers).
 - **Tests unitaires prévus** : 1 à 3, sur la règle d'affichage de la mention événementielle.
 - **Étapes ajoutées à la démo** : depuis la vue 360, cliquer « Préparer le cycle », vérifier l'affichage des 2 contacts et de la règle d'arrêt.
+- **Bilan** : Codage réel : 3 minutes, bien sous le budget de 10 (un ajustement cosmétique en plus : la raison du don ne décapitalise plus que sa première lettre, pour ne pas casser l'acronyme « ESC »). Les 3 critères d'acceptation sont satisfaits : séquence des 2 contacts + règle d'arrêt affichées depuis la vue 360 ; mention événementielle conditionnelle au champ `habitueEvenements` (vérifiée pour Claire/Marie vs Thomas/Philippe) ; le bouton « Valider et lancer le cycle » mène à une confirmation minimale (enrichie en itération 7). 2 tests Vitest ajoutés (`mentionEvenementielle`, `messageInvitation`), `npm test` passe (2 api + 7 frontend). Contrat de déployabilité : aucune borne, aucune alarme. Vérifié visuellement par capture d'écran, conforme à `page3A.png`. Démo Playwright étendue (vue 360 → cycle → confirmation → retour liste). Commité, poussé, version 5 signalée à PM Lab (`moteur_avance: false`). Rien de reporté.
+
+## Itération 6 : La vue 360 affiche le profil, les événements et l'impact des dons
+
+⚠️ **Insérée à la demande du développeur**, sur la base de la maquette `page2B.png` : complète la vue 360 (écran 2), simplifiée en itération 2 par manque de temps.
+
+- **Dans le périmètre** : sur la vue 360, après l'historique de don, ajouter : les puces « Profil & porte d'entrée » (ex. type de don, habitué des événements), la liste des événements auxquels le donateur a participé (nom, date, origine IfM/Externe), la carte « Impact de ses dons » (2-3 phrases fictives liées au montant cumulé).
+- **Hors périmètre** : données réelles d'impact (textes restent génériques/fictifs par donateur), liens cliquables vers les événements.
+- **Critères d'acceptation** :
+  - Étant donné la vue 360 d'un donateur, quand elle s'affiche, alors les puces de profil apparaissent sous l'historique de don.
+  - Étant donné la vue 360, quand elle s'affiche, alors la liste de ses événements apparaît, avec leur origine (IfM ou Externe).
+  - Étant donné la vue 360, quand elle s'affiche, alors la carte « Impact de ses dons » apparaît, cohérente avec son montant cumulé.
+- **Hypothèse de l'équipe couverte** : aucune directement — complète l'écran déjà couvert par H4 (vue 360 = 1 seul outil).
+- **Codage estimé** : 10 minutes.
+- **Fichiers prévus** : extension de `frontend/src/lib/donateurs.ts` (champs profil/événements/impact), `frontend/src/app/donateur/[id]/page.tsx`, CSS associé (≈3 fichiers).
+- **Tests unitaires prévus** : 1 à 3, si une règle de calcul s'y prête (ex. formatage de la liste d'événements) ; sinon le signaler (pur balisage, pas de test).
+- **Étapes ajoutées à la démo** : aucune (vue 360 déjà couverte par l'itération 2).
+- **Bilan** : _à remplir en fin d'itération (durée de codage réelle, dépassement éventuel, fait, reporté)_
+
+## Itération 7 : La confirmation du lancement affiche le récapitulatif et les indicateurs
+
+Basée sur la maquette `page4.png` (`screen-4` du prototype).
+
+- **Dans le périmètre** : depuis la séquence du cycle (itération 5), le bouton « Valider et lancer le cycle » mène à un écran de confirmation : message de succès, récapitulatif (donateur, statut des 2 messages, envois max, isolation), carte « Hypothèses vérifiables » avec les 3 indicateurs (envois/6 semaines, envois après invitation, outils consultés), bouton retour à la liste.
+- **Hors périmètre** : tout envoi réel, toute persistance du lancement (actualiser la page réinitialise l'état).
+- **Critères d'acceptation** :
+  - Étant donné la séquence validée, quand on clique « Valider et lancer le cycle », alors l'écran de confirmation s'affiche avec le nom du donateur.
+  - Étant donné l'écran de confirmation, quand il s'affiche, alors les 3 indicateurs apparaissent avec leur objectif (< 9, 0, 1).
+  - Étant donné l'écran de confirmation, quand on clique « Retour à la liste », alors on revient à l'écran 1.
+- **Hypothèse de l'équipe couverte** : H1, H2 et H4 (les 3 indicateurs mesurés sont affichés explicitement).
+- **Codage estimé** : 10 minutes.
+- **Fichiers prévus** : `frontend/src/app/donateur/[id]/cycle/confirmation/page.tsx` (ou équivalent), lien depuis la page cycle, CSS associé (≈3 fichiers).
+- **Tests unitaires prévus** : 1 à 3, sur le calcul des indicateurs si une logique existe (sinon, pur affichage de constantes connues : 2 envois max, 0 après invitation, 1 outil).
+- **Étapes ajoutées à la démo** : depuis la séquence, valider le cycle, vérifier l'affichage des indicateurs, revenir à la liste.
 - **Bilan** : _à remplir en fin d'itération (durée de codage réelle, dépassement éventuel, fait, reporté)_
 
 ## À venir (non détaillé, ordre de priorité du plan de livraison de l'équipe)
 
-1. Écran 4 (confirmation) : isolation du flux général, 3 indicateurs de mesure (envois/6 semaines, envois après invitation, outils consultés) — `screen-4` du prototype.
-2. Sélecteur de persona complet (si un rôle autre que « Responsable collecte » devient nécessaire à l'écran).
-3. Stabilisation finale pour le pitch, si le temps restant ne permet plus qu'une itération.
+1. Sélecteur de persona complet (si un rôle autre que « Responsable collecte » devient nécessaire à l'écran).
+2. Stabilisation finale pour le pitch, si le temps restant ne permet plus qu'une itération.
