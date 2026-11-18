@@ -678,3 +678,35 @@
 .cardPink .cardTitle {
   color: var(--i4m-rose-fonce);
 }
+
+/* ── Pagination ── */
+.pagination {
+  display: flex;
+  justify-content: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.pageBtn {
+  min-width: 36px;
+  height: 36px;
+  padding: 0 10px;
+  border-radius: 8px;
+  border: 1.5px solid var(--i4m-bleu-tres-clair);
+  background: var(--i4m-blanc);
+  color: var(--i4m-bleu);
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.pageBtn:disabled {
+  color: var(--i4m-bleu-clair);
+  cursor: not-allowed;
+  opacity: 0.5;
+}
+
+.pageBtnActive {
+  background: var(--i4m-bleu);
+  border-color: var(--i4m-bleu);
+  color: var(--i4m-blanc);
+}

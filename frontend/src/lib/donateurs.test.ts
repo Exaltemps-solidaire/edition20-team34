@@ -2,11 +2,14 @@ import { describe, expect, it } from "vitest";
 import {
   ENVOIS_MAX_CYCLE,
   OBJECTIF_ENVOIS_SIX_SEMAINES,
+  donateurs,
   estEligibleReactivation,
   libelleStatut,
   mentionEvenementielle,
   messageInvitation,
   montantCumule,
+  nombrePages,
+  paginer,
   phrasesImpact,
   trouverDonateur,
 } from "./donateurs";
@@ -68,5 +71,19 @@ describe("phrasesImpact", () => {
 describe("ENVOIS_MAX_CYCLE", () => {
   it("reste bien en dessous de l'objectif de 6 semaines (H1)", () => {
     expect(ENVOIS_MAX_CYCLE).toBeLessThan(OBJECTIF_ENVOIS_SIX_SEMAINES);
+  });
+});
+
+describe("paginer", () => {
+  it("découpe en pages de la taille demandée, la dernière pouvant être incomplète", () => {
+    expect(paginer(donateurs, 1, 10)).toHaveLength(10);
+    expect(paginer(donateurs, 2, 10)).toHaveLength(donateurs.length - 10);
+  });
+});
+
+describe("nombrePages", () => {
+  it("arrondit au nombre de pages supérieur", () => {
+    expect(nombrePages(15, 10)).toBe(2);
+    expect(nombrePages(20, 10)).toBe(2);
   });
 });

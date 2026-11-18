@@ -1,7 +1,7 @@
 import Image from "next/image";
-import Link from "next/link";
 import styles from "./page.module.css";
-import { donateurs, libelleStatut } from "@/lib/donateurs";
+import { donateurs } from "@/lib/donateurs";
+import ListeDonateurs from "./ListeDonateurs";
 
 function LogoI4M() {
   return (
@@ -54,34 +54,7 @@ export default function Home() {
           actives. Le cycle court s&apos;arrête après l&apos;invitation unique à redonner.
         </div>
 
-        <ul className={styles.liste}>
-          {donateurs.map((donateur, index) => (
-            <li key={donateur.id}>
-              <Link href={`/donateur/${donateur.id}`} className={styles.donateur}>
-                <div className={index % 2 === 0 ? styles.avatar : `${styles.avatar} ${styles.pink}`}>
-                  {donateur.initiales}
-                </div>
-                <div className={styles.donateurInfo}>
-                  <div className={styles.nom}>{donateur.nom}</div>
-                  <div className={styles.detail}>
-                    Dernier don · {donateur.dernierDon} · {donateur.source}
-                  </div>
-                  <div className={styles.raison}>Raison : {donateur.raison}</div>
-                  <span
-                    className={
-                      donateur.statut.type === "enCours"
-                        ? `${styles.badge} ${styles.enCours}`
-                        : styles.badge
-                    }
-                  >
-                    {libelleStatut(donateur.statut)}
-                  </span>
-                </div>
-                <div className={styles.arrow}>›</div>
-              </Link>
-            </li>
-          ))}
-        </ul>
+        <ListeDonateurs donateurs={donateurs} />
       </main>
     </div>
   );

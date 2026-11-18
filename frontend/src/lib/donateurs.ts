@@ -30,6 +30,55 @@ export type Donateur = {
 
 export const SEUIL_MOIS_INACTIVITE = 13;
 
+// Donateurs fictifs supplémentaires (itération 10), au même format, pour peupler la pagination.
+function genererDonateursSupplementaires(): Donateur[] {
+  const prenoms = [
+    "Sophie",
+    "Marc",
+    "Isabelle",
+    "Julien",
+    "Nathalie",
+    "Pierre",
+    "Camille",
+    "Laurent",
+    "Émilie",
+    "Antoine",
+    "Sylvie",
+  ];
+  const noms = [
+    "Martin",
+    "Girard",
+    "Petit",
+    "Faure",
+    "Robert",
+    "Simon",
+    "Michel",
+    "Garcia",
+    "David",
+    "Bernard",
+    "Richard",
+  ];
+  const sources = ["ESC Saint-Cloud", "Campagne fin d'année", "Rallye du Cœur Lyon", "Don en ligne direct"];
+
+  return prenoms.map((prenom, index) => {
+    const nom = noms[index];
+    const source = sources[index % sources.length];
+    return {
+      id: `${prenom.toLowerCase()}-${nom.toLowerCase()}`,
+      nom: `${prenom} ${nom}`,
+      initiales: `${prenom[0]}${nom[0]}`,
+      dernierDon: "janv. 2024",
+      source,
+      raison: "Don enregistré par le CRM",
+      statut: { type: "inactif", moisInactivite: 13 + ((index * 3) % 20) },
+      historique: { nombreDons: 1 + (index % 4), donMoyen: 20 + index * 5, premierDon: "2022" },
+      habitueEvenements: index % 3 === 0,
+      profil: ["Don enregistré"],
+      evenements: [{ nom: source, date: "janv. 2024", origine: index % 2 === 0 ? "IfM" : "Externe" }],
+    };
+  });
+}
+
 // Données en dur (itération 1), reprises du prototype retenu (screen-1).
 export const donateurs: Donateur[] = [
   {
@@ -92,6 +141,7 @@ export const donateurs: Donateur[] = [
     profil: ["Don en ligne", "Don ponctuel"],
     evenements: [{ nom: "Campagne Septembre en or", date: "juil. 2024", origine: "Externe" }],
   },
+  ...genererDonateursSupplementaires(),
 ];
 
 export function estEligibleReactivation(statut: StatutDonateur): boolean {
@@ -144,3 +194,12 @@ export function messageInvitation(donateur: Donateur): string {
 export const ENVOIS_MAX_CYCLE = 2;
 export const OBJECTIF_ENVOIS_SIX_SEMAINES = 9;
 export const OUTILS_CONSULTES = 1;
+
+export function paginer<T>(items: T[], page: number, parPage: number): T[] {
+  const debut = (page - 1) * parPage;
+  return items.slice(debut, debut + parPage);
+}
+
+export function nombrePages(total: number, parPage: number): number {
+  return Math.max(1, Math.ceil(total / parPage));
+}

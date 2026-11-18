@@ -13,6 +13,13 @@ test("Démo : le cas passant", async ({ page }) => {
     await expect(page.getByText("Cycle en cours")).toBeVisible();
   });
 
+  await test.step("Je navigue entre les pages de la liste", async () => {
+    await page.getByRole("button", { name: "2", exact: true }).click();
+    await expect(page.getByText("Claire Beaumont")).not.toBeVisible();
+    await page.getByRole("button", { name: "1", exact: true }).click();
+    await expect(page.getByText("Claire Beaumont")).toBeVisible();
+  });
+
   await test.step("Je consulte la vue 360 d'un donateur", async () => {
     await page.getByText("Claire Beaumont").click();
     await expect(page.getByRole("heading", { name: "Claire Beaumont", exact: true })).toBeVisible();
