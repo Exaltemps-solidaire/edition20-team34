@@ -5,6 +5,7 @@ import {
   mentionEvenementielle,
   messageInvitation,
   montantCumule,
+  phrasesImpact,
   trouverDonateur,
 } from "./donateurs";
 
@@ -53,5 +54,11 @@ describe("messageInvitation", () => {
   it("porte la mention événementielle seulement si le donateur est habitué", () => {
     expect(messageInvitation(claire)).toContain("prochain événement");
     expect(messageInvitation(thomas)).not.toContain("prochain événement");
+  });
+});
+
+describe("phrasesImpact", () => {
+  it("mentionne le montant cumulé du donateur", () => {
+    expect(phrasesImpact(claire)[0]).toContain("75 €");
   });
 });

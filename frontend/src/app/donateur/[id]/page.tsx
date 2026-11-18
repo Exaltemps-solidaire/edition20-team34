@@ -2,7 +2,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import styles from "../../page.module.css";
-import { donateurs, libelleStatut, montantCumule, trouverDonateur } from "@/lib/donateurs";
+import { donateurs, libelleStatut, montantCumule, phrasesImpact, trouverDonateur } from "@/lib/donateurs";
 
 export function generateStaticParams() {
   return donateurs.map((donateur) => ({ id: donateur.id }));
@@ -93,6 +93,48 @@ export default async function VueDonateur({ params }: { params: Promise<{ id: st
             <span className={styles.infoLabel}>Source principale</span>
             <span className={styles.infoValue}>{donateur.source}</span>
           </div>
+        </div>
+
+        <div>
+          <div className={styles.sectionLabel}>Profil &amp; porte d&apos;entrée</div>
+          <div className={styles.chips} style={{ marginTop: 8 }}>
+            {donateur.profil.map((item) => (
+              <span
+                key={item}
+                className={item.toLowerCase().includes("événement") ? `${styles.chip} ${styles.event}` : styles.chip}
+              >
+                {item}
+              </span>
+            ))}
+          </div>
+        </div>
+
+        <div>
+          <div className={styles.sectionLabel}>Événements auxquels {donateur.nom.split(" ")[0]} a participé</div>
+          <div className={styles.eventList} style={{ marginTop: 8 }}>
+            {donateur.evenements.map((evenement, index) => (
+              <div className={styles.eventItem} key={`${evenement.nom}-${index}`}>
+                <div className={styles.eventName}>{evenement.nom}</div>
+                <div className={styles.eventDate}>{evenement.date}</div>
+                <span
+                  className={
+                    evenement.origine === "Externe" ? `${styles.eventBadge} ${styles.externe}` : styles.eventBadge
+                  }
+                >
+                  {evenement.origine}
+                </span>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        <div className={styles.card}>
+          <div className={styles.cardTitle}>Impact de ses dons</div>
+          {phrasesImpact(donateur).map((phrase) => (
+            <div className={styles.impactRow} key={phrase}>
+              {phrase}
+            </div>
+          ))}
         </div>
 
         <div className={styles.alertBox}>

@@ -8,6 +8,12 @@ export type Historique = {
   premierDon: string;
 };
 
+export type Evenement = {
+  nom: string;
+  date: string;
+  origine: "IfM" | "Externe";
+};
+
 export type Donateur = {
   id: string;
   nom: string;
@@ -18,6 +24,8 @@ export type Donateur = {
   statut: StatutDonateur;
   historique: Historique;
   habitueEvenements: boolean;
+  profil: string[];
+  evenements: Evenement[];
 };
 
 export const SEUIL_MOIS_INACTIVITE = 13;
@@ -34,6 +42,13 @@ export const donateurs: Donateur[] = [
     statut: { type: "inactif", moisInactivite: 26 },
     historique: { nombreDons: 3, donMoyen: 25, premierDon: "sept. 2021" },
     habitueEvenements: true,
+    profil: ["Course ESC", "Habituée événements IfM", "Don annuel"],
+    evenements: [
+      { nom: "ESC Saint-Cloud", date: "sept. 2021", origine: "IfM" },
+      { nom: "ESC Saint-Cloud", date: "sept. 2022", origine: "IfM" },
+      { nom: "ESC Saint-Cloud", date: "sept. 2023", origine: "IfM" },
+      { nom: "Vente caritative Septembre en or", date: "sept. 2022", origine: "Externe" },
+    ],
   },
   {
     id: "thomas-lefevre",
@@ -45,6 +60,8 @@ export const donateurs: Donateur[] = [
     statut: { type: "inactif", moisInactivite: 25 },
     historique: { nombreDons: 2, donMoyen: 40, premierDon: "oct. 2023" },
     habitueEvenements: false,
+    profil: ["Campagne de fin d'année", "Don réactif"],
+    evenements: [{ nom: "Campagne de fin d'année", date: "oct. 2023", origine: "IfM" }],
   },
   {
     id: "marie-rousseau",
@@ -56,6 +73,11 @@ export const donateurs: Donateur[] = [
     statut: { type: "enCours", jour: 5 },
     historique: { nombreDons: 5, donMoyen: 30, premierDon: "mars 2022" },
     habitueEvenements: true,
+    profil: ["Rallye du Cœur", "Habituée événements IfM", "Don régulier"],
+    evenements: [
+      { nom: "Rallye du Cœur Lyon", date: "mars 2022", origine: "Externe" },
+      { nom: "Rallye du Cœur Lyon", date: "août 2024", origine: "Externe" },
+    ],
   },
   {
     id: "philippe-dupont",
@@ -67,6 +89,8 @@ export const donateurs: Donateur[] = [
     statut: { type: "inactif", moisInactivite: 18 },
     historique: { nombreDons: 1, donMoyen: 50, premierDon: "juil. 2024" },
     habitueEvenements: false,
+    profil: ["Don en ligne", "Don ponctuel"],
+    evenements: [{ nom: "Campagne Septembre en or", date: "juil. 2024", origine: "Externe" }],
   },
 ];
 
@@ -99,6 +123,15 @@ export function mentionEvenementielle(donateur: Donateur): string | null {
 export function messageBilanImpact(donateur: Donateur): string {
   const raison = donateur.raison.charAt(0).toLowerCase() + donateur.raison.slice(1);
   return `${donateur.nom}, ${raison}. Vos ${donateur.historique.nombreDons} dons (${montantCumule(donateur.historique)} €) ont contribué à financer des projets de recherche en oncologie pédiatrique. Pas de demande aujourd'hui : juste vous dire que votre geste compte, encore aujourd'hui.`;
+}
+
+export function phrasesImpact(donateur: Donateur): string[] {
+  const montant = montantCumule(donateur.historique);
+  return [
+    `Ses ${montant} € ont contribué au programme Fight Kids Cancer (essais cliniques européens).`,
+    `En 2023, Imagine for Margo a financé 12 projets de recherche grâce à des donateurs comme ${donateur.nom}.`,
+    `Les fonds récoltés ont soutenu 3 équipes de chercheurs en oncologie pédiatrique.`,
+  ];
 }
 
 export function messageInvitation(donateur: Donateur): string {
