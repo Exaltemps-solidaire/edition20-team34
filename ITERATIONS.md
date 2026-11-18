@@ -28,7 +28,8 @@
 - **Fichiers prévus** : `.env.example`, `DEPLOIEMENT.md`, `frontend/src/lib/donateurs.ts` (données + règle d'éligibilité), `frontend/src/app/page.tsx`, CSS associé (≈5 fichiers).
 - **Tests unitaires prévus** : 1 à 3, sur la règle « éligible à la réactivation si ≥ 13 mois d'inactivité et aucun cycle en cours ».
 - **Étapes ajoutées à la démo** : ouvrir l'application, vérifier que les 4 donateurs s'affichent avec leurs badges.
-- **Bilan** : _à remplir en fin d'itération (durée de codage réelle, dépassement éventuel, fait, reporté)_
+- **Bilan** : Codage réel : 2 minutes, bien sous le budget de 10 (pas de dépassement). Les 3 critères d'acceptation sont satisfaits : `/health` et `/sante` répondent 200 sur `frontend` (8080) et `api` (8081) ; les 4 donateurs s'affichent avec nom, dernier don et badge ; la règle d'éligibilité (≥13 mois d'inactivité, aucun cycle en cours) est posée et testée. 3 tests Vitest sur `estEligibleReactivation`/`libelleStatut` (+ 2 tests déjà présents sur les routes de santé de `api/`), `npm test` passe (2 + 3). Plateforme core-platform démarrée, base `team34` créée, `podman-compose.yml` écrit, images construites et publiées sur le registre local, déploiement lancé et vérifié (`curl localhost:8080` et `localhost:8081`, 200 partout). Contrat de déployabilité : aucune borne, aucune alarme. Démo Playwright étendue d'une étape, vérifiée en headless contre le déploiement local (8080) — un ajustement a été nécessaire (`getByText` ambigu entre le titre et le KPI, corrigé en `getByRole("heading", ...)`). Commité (2 commits : le socle + l'écran, puis le correctif de démo) et poussé sur `main`. Version 1 signalée à PM Lab (`moteur_avance: false`, version tout de même enregistrée). Rien de reporté.
+  ⚠️ Le développeur doit encore confirmer depuis son navigateur que `$URL_PUBLIQUE/health` et `/sante` répondent 200 (la machine ne peut pas joindre `URL_PUBLIQUE` elle-même) — ce point ne bloque pas le signal déjà envoyé, mais reste à vérifier.
 
 ## Itération 2 : La responsable collecte consulte la vue 360 d'un donateur sélectionné
 
@@ -48,6 +49,10 @@
 - **Bilan** : _à remplir en fin d'itération (durée de codage réelle, dépassement éventuel, fait, reporté)_
 
 ---
+
+## Replanification après l'itération 1
+
+Le codage n'a pris que 2 minutes (contre 10 budgétées) : de la marge subsiste. L'itération 2 (vue 360 du donateur), déjà détaillée ci-dessus, reste le prochain objectif proposé, sans changement de priorité. Le temps restant sera redemandé au début de `/iteration 2`, comme le prévoit la section 8.
 
 ## À venir (non détaillé, ordre de priorité du plan de livraison de l'équipe)
 
