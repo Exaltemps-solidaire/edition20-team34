@@ -1,5 +1,12 @@
 import { describe, expect, it } from "vitest";
-import { estEligibleReactivation, libelleStatut, montantCumule, trouverDonateur } from "./donateurs";
+import {
+  estEligibleReactivation,
+  libelleStatut,
+  mentionEvenementielle,
+  messageInvitation,
+  montantCumule,
+  trouverDonateur,
+} from "./donateurs";
 
 describe("estEligibleReactivation", () => {
   it("est éligible seulement si inactif depuis au moins 13 mois", () => {
@@ -29,5 +36,22 @@ describe("trouverDonateur", () => {
 describe("montantCumule", () => {
   it("multiplie le nombre de dons par le don moyen", () => {
     expect(montantCumule({ nombreDons: 3, donMoyen: 25, premierDon: "sept. 2021" })).toBe(75);
+  });
+});
+
+const claire = trouverDonateur("claire-beaumont")!;
+const thomas = trouverDonateur("thomas-lefevre")!;
+
+describe("mentionEvenementielle", () => {
+  it("n'apparaît que pour un donateur habitué des événements", () => {
+    expect(mentionEvenementielle(claire)).not.toBeNull();
+    expect(mentionEvenementielle(thomas)).toBeNull();
+  });
+});
+
+describe("messageInvitation", () => {
+  it("porte la mention événementielle seulement si le donateur est habitué", () => {
+    expect(messageInvitation(claire)).toContain("prochain événement");
+    expect(messageInvitation(thomas)).not.toContain("prochain événement");
   });
 });

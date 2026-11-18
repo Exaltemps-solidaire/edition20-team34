@@ -17,6 +17,7 @@ export type Donateur = {
   raison: string;
   statut: StatutDonateur;
   historique: Historique;
+  habitueEvenements: boolean;
 };
 
 export const SEUIL_MOIS_INACTIVITE = 13;
@@ -32,6 +33,7 @@ export const donateurs: Donateur[] = [
     raison: "Participation à la course ESC en tant que coureuse",
     statut: { type: "inactif", moisInactivite: 26 },
     historique: { nombreDons: 3, donMoyen: 25, premierDon: "sept. 2021" },
+    habitueEvenements: true,
   },
   {
     id: "thomas-lefevre",
@@ -42,6 +44,7 @@ export const donateurs: Donateur[] = [
     raison: "Sollicitation campagne de fin d'année (CFA)",
     statut: { type: "inactif", moisInactivite: 25 },
     historique: { nombreDons: 2, donMoyen: 40, premierDon: "oct. 2023" },
+    habitueEvenements: false,
   },
   {
     id: "marie-rousseau",
@@ -52,6 +55,7 @@ export const donateurs: Donateur[] = [
     raison: "Proche impliqué dans le Rallye du Cœur",
     statut: { type: "enCours", jour: 5 },
     historique: { nombreDons: 5, donMoyen: 30, premierDon: "mars 2022" },
+    habitueEvenements: true,
   },
   {
     id: "philippe-dupont",
@@ -62,6 +66,7 @@ export const donateurs: Donateur[] = [
     raison: "Don spontané suite à Septembre en or",
     statut: { type: "inactif", moisInactivite: 18 },
     historique: { nombreDons: 1, donMoyen: 50, premierDon: "juil. 2024" },
+    habitueEvenements: false,
   },
 ];
 
@@ -82,4 +87,22 @@ export function trouverDonateur(id: string): Donateur | undefined {
 
 export function montantCumule(historique: Historique): number {
   return historique.nombreDons * historique.donMoyen;
+}
+
+export function mentionEvenementielle(donateur: Donateur): string | null {
+  if (!donateur.habitueEvenements) {
+    return null;
+  }
+  return `Mention prochain ${donateur.source} — habitué·e événements`;
+}
+
+export function messageBilanImpact(donateur: Donateur): string {
+  const raison = donateur.raison.charAt(0).toLowerCase() + donateur.raison.slice(1);
+  return `${donateur.nom}, ${raison}. Vos ${donateur.historique.nombreDons} dons (${montantCumule(donateur.historique)} €) ont contribué à financer des projets de recherche en oncologie pédiatrique. Pas de demande aujourd'hui : juste vous dire que votre geste compte, encore aujourd'hui.`;
+}
+
+export function messageInvitation(donateur: Donateur): string {
+  const base = `${donateur.nom}, si vous souhaitez continuer à soutenir la recherche contre les cancers des enfants, nous serions heureux de vous retrouver — comme vous le souhaitez.`;
+  const mention = mentionEvenementielle(donateur);
+  return mention ? `${base} Nous espérons vous revoir au prochain événement ${donateur.source}.` : base;
 }

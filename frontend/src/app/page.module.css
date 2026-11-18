@@ -317,3 +317,183 @@
   color: var(--i4m-bleu-clair);
   font-size: 18px;
 }
+
+/* ── Section titre ── */
+.sectionLabel {
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--i4m-bleu);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+.divider {
+  height: 1px;
+  background: var(--i4m-bleu-tres-clair);
+  border: none;
+  margin: 4px 0;
+}
+
+/* ── Étapes du cycle ── */
+.cycleSteps {
+  display: flex;
+  flex-direction: column;
+}
+
+.cycleStep {
+  display: flex;
+  gap: 12px;
+  align-items: flex-start;
+  padding-bottom: 16px;
+  position: relative;
+}
+
+.stepLine {
+  position: absolute;
+  left: 15px;
+  top: 32px;
+  bottom: 0;
+  width: 2px;
+  background: var(--i4m-bleu-clair);
+}
+
+.cycleStep:last-child .stepLine {
+  display: none;
+}
+
+.stepDot {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  background: var(--i4m-bleu);
+  color: var(--i4m-blanc);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 12px;
+  font-weight: 700;
+  flex-shrink: 0;
+  position: relative;
+  z-index: 1;
+}
+
+.stepDot.done {
+  background: var(--i4m-rose-fonce);
+}
+
+.stepBody {
+  flex: 1;
+  padding-top: 4px;
+}
+
+.stepTitle {
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.stepDesc {
+  font-size: 11px;
+  color: var(--i4m-bleu-clair);
+  font-weight: 500;
+}
+
+.stepTag {
+  display: inline-block;
+  margin-top: 4px;
+  padding: 2px 8px;
+  border-radius: 20px;
+  font-size: 10px;
+  font-weight: 600;
+  background: var(--i4m-bleu-tres-clair);
+  color: var(--i4m-bleu);
+}
+
+.stepTag.stop {
+  background: rgba(230, 69, 135, 0.1);
+  color: var(--i4m-rose-fonce);
+}
+
+/* ── Aperçu de message ── */
+.messagePreview {
+  background: var(--i4m-bleu-tres-clair);
+  border-radius: 12px;
+  padding: 14px 16px;
+  border-left: 4px solid var(--i4m-bleu);
+}
+
+.messagePreview.pink {
+  border-left-color: var(--i4m-rose-fonce);
+  background: rgba(230, 69, 135, 0.06);
+}
+
+.msgHeader {
+  font-size: 10px;
+  font-weight: 700;
+  text-transform: uppercase;
+  color: var(--i4m-bleu);
+  margin-bottom: 4px;
+}
+
+.messagePreview.pink .msgHeader {
+  color: var(--i4m-rose-fonce);
+}
+
+.msgSubject {
+  font-size: 12px;
+  font-weight: 600;
+  margin-bottom: 8px;
+}
+
+.msgBody {
+  font-size: 12px;
+  line-height: 1.5;
+  background: var(--i4m-blanc);
+  border: 1px solid rgba(17, 162, 221, 0.2);
+  border-radius: 8px;
+  padding: 10px;
+}
+
+.msgHint {
+  font-size: 10px;
+  color: var(--i4m-bleu-clair);
+  font-style: italic;
+  margin-top: 4px;
+}
+
+/* ── Lien agenda ── */
+.agendaLink {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background: var(--i4m-bleu-tres-clair);
+  border-radius: 10px;
+  padding: 10px 14px;
+  text-decoration: none;
+  color: inherit;
+}
+
+.agendaTitle {
+  font-size: 12px;
+  font-weight: 600;
+  text-decoration: underline;
+  color: var(--i4m-bleu);
+}
+
+.agendaSub {
+  font-size: 10px;
+  color: var(--i4m-bleu-clair);
+}
+
+/* ── Boutons ── */
+.btnPrimary {
+  display: block;
+  width: 100%;
+  background: var(--i4m-rose-fonce);
+  color: var(--i4m-blanc);
+  border: none;
+  border-radius: 10px;
+  padding: 15px 20px;
+  font-size: 15px;
+  font-weight: 700;
+  text-align: center;
+}

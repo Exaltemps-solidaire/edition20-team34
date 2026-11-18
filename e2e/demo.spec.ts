@@ -17,7 +17,15 @@ test("Démo : le cas passant", async ({ page }) => {
     await page.getByText("Claire Beaumont").click();
     await expect(page.getByRole("heading", { name: "Claire Beaumont", exact: true })).toBeVisible();
     await expect(page.getByText("Montant cumulé")).toBeVisible();
-    await page.getByText("Retour").click();
+  });
+
+  await test.step("Je prépare le cycle de réactivation", async () => {
+    await page.getByText("Préparer le cycle de réactivation").click();
+    await expect(page.getByRole("heading", { name: "2 contacts maximum" })).toBeVisible();
+    await expect(page.getByText("Fin du cycle — arrêt complet")).toBeVisible();
+    await page.getByText("Valider et lancer le cycle").click();
+    await expect(page.getByRole("heading", { name: "Cycle lancé avec succès" })).toBeVisible();
+    await page.getByText("Retour à la liste").click();
     await expect(page.getByRole("heading", { name: "Donateurs inactifs" })).toBeVisible();
   });
 });

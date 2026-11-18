@@ -99,6 +99,10 @@ export default async function VueDonateur({ params }: { params: Promise<{ id: st
           <strong>{donateur.nom}</strong> est isolé(e) du flux général depuis la détection du
           seuil : aucune campagne de fin d&apos;année ni relance habituelle ne lui sera adressée.
         </div>
+
+        <Link href={`/donateur/${donateur.id}/cycle`} className={styles.btnPrimary}>
+          Préparer le cycle de réactivation →
+        </Link>
       </main>
     </div>
   );
