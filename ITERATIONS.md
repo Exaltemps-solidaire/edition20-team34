@@ -203,3 +203,24 @@ Basée sur la maquette `page4.png` (`screen-4` du prototype).
 - **Tests unitaires prévus** : aucun (pur CSS).
 - **Étapes ajoutées à la démo** : aucune.
 - **Bilan** : Codage réel : 1 minute, bien sous le budget de 5. Les 3 critères d'acceptation sont satisfaits : boutons en largeur naturelle (min 220px), centrés via `align-self: center` sur les 4 écrans concernés, vérifié par capture d'écran mobile (390px) et desktop (1280px). Aucun test (pur CSS). `npm test` inchangé (2 api + 9 frontend). Contrat de déployabilité : aucune borne, aucune alarme. Démo Playwright inchangée et toujours verte. Commité, poussé, version 9 signalée à PM Lab (`moteur_avance: false`). Rien de reporté.
+
+## Itération 10 : La liste des donateurs à réactiver est paginée
+
+**Temps restant annoncé au début de cette itération** : 25 minutes (après une première annonce de 10 minutes, corrigée par le développeur). Correspond exactement au minimum nécessaire (10 codage + 5 publication + 10 tour de test), sans marge.
+
+⚠️ **Insérée à la demande du développeur**, hors plan initial : 15 donateurs au total (11 ajoutés, fictifs, au même format que les 4 existants), 10 par page, pagination numérotée + bouton « Suivant ».
+
+- **Dans le périmètre** : écran 1 (liste) seulement — pagination côté client (données déjà toutes chargées, pas d'appel réseau), 10 donateurs par page, boutons de page numérotés + « Suivant » (désactivé sur la dernière page). Les 11 donateurs ajoutés ont un historique et au moins un événement, pour ne pas casser la vue 360/le cycle déjà construits.
+- **Hors périmètre** : recherche/filtre, tri, pagination côté serveur, modification du nombre par page.
+- **Critères d'acceptation** :
+  - Étant donné 15 donateurs au total, quand la liste s'affiche, alors la page 1 en montre 10.
+  - Étant donné la page 1 affichée, quand on clique « 2 » ou « Suivant », alors la page 2 affiche les 5 restants.
+  - Étant donné la dernière page affichée, quand elle s'affiche, alors le bouton « Suivant » est désactivé.
+- **Hypothèse de l'équipe couverte** : aucune — confort d'usage à plus grande échelle.
+- **Codage estimé** : 10 minutes.
+- **Fichiers prévus** : `frontend/src/lib/donateurs.ts` (11 donateurs de plus, fonctions `paginer`/`nombrePages`), `frontend/src/lib/donateurs.test.ts`, `frontend/src/app/ListeDonateurs.tsx` (nouveau, composant client pour l'état de pagination), `frontend/src/app/page.tsx`, `frontend/src/app/page.module.css` (≈5 fichiers).
+- **Tests unitaires prévus** : 1 à 3, sur `paginer` et `nombrePages`.
+- **Étapes ajoutées à la démo** : aucune (le cas passant reste sur la page 1).
+- **Bilan** : Codage réel : 3 minutes, bien sous le budget de 10. Les 3 critères d'acceptation sont satisfaits (page 1 = 10 donateurs, page 2 = 5, « Suivant » désactivé sur la dernière page), mais **seulement après correction d'un bug bloquant** trouvé en vérifiant : la `Content-Security-Policy` du nginx du front (posée en itération 3) ne déclarait pas de `script-src`, ce qui empêchait React de s'hydrater sur l'export statique — **aucun bouton interactif ne fonctionnait depuis l'itération 3**, masqué jusqu'ici parce que toute la navigation se faisait par vrais liens HTML (fonctionnent sans JS). La pagination, premier élément à exiger un état client réel, l'a révélé. Corrigé en ajoutant `script-src 'self' 'unsafe-inline'` à la CSP (nécessaire car Next.js embarque ses données d'hydratation dans des `<script>` inline sans nonce en export statique). 3 tests Vitest ajoutés (`paginer`, `nombrePages`), `npm test` passe (2 api + 11 frontend). Contrat de déployabilité : aucune borne, aucune alarme. Vérifié par script Playwright direct (clic page 2 → bons donateurs, bouton Suivant désactivé) en plus des captures d'écran. Démo Playwright étendue d'une étape (navigation entre pages), pour que ce type de régression (hydratation cassée) soit attrapé plus tôt à l'avenir. Commité, poussé, version 10 signalée à PM Lab (`moteur_avance: false`). Rien de reporté.
+
+⚠️ **À signaler à l'équipe** : ce bug touchait potentiellement d'autres interactions client déjà en ligne entre les itérations 3 et 9 (aucune n'a été identifiée dans ce build, la navigation étant partout des liens HTML, mais à garder en tête si un comportement semblait « figé » lors des tours de test précédents).
