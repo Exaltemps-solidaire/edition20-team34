@@ -1,0 +1,109 @@
+.page {
+  --bleu: #11a2dd;
+  --bleu-tres-clair: #e0ecfa;
+  --rose-fonce: #e64587;
+  --texte: #575756;
+
+  min-height: 100vh;
+  background: #fafafa;
+  color: var(--texte);
+  font-family: var(--font-geist-sans);
+}
+
+.topbar {
+  background: var(--bleu);
+  color: #fff;
+  padding: 16px 20px;
+}
+
+.topbarTitle {
+  margin: 0;
+  font-size: 1.2rem;
+}
+
+.topbarSub {
+  font-size: 0.85rem;
+  opacity: 0.9;
+}
+
+.main {
+  max-width: 640px;
+  margin: 0 auto;
+  padding: 16px 20px;
+}
+
+.kpiRow {
+  display: flex;
+  gap: 12px;
+  margin-bottom: 16px;
+}
+
+.kpiCard {
+  flex: 1;
+  background: #fff;
+  border-radius: 10px;
+  padding: 12px;
+  text-align: center;
+}
+
+.kpiValue {
+  font-size: 1.6rem;
+  font-weight: 700;
+  color: var(--bleu);
+}
+
+.kpiValue.pink {
+  color: var(--rose-fonce);
+}
+
+.kpiLabel {
+  font-size: 0.75rem;
+}
+
+.alertBox {
+  background: var(--bleu-tres-clair);
+  border-radius: 10px;
+  padding: 12px;
+  margin-bottom: 16px;
+  font-size: 0.85rem;
+}
+
+.liste {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.donateur {
+  display: block;
+  background: #fff;
+  border-radius: 10px;
+  padding: 14px;
+  margin-bottom: 10px;
+  text-decoration: none;
+  color: inherit;
+}
+
+.nom {
+  font-weight: 600;
+}
+
+.detail {
+  font-size: 0.85rem;
+  color: var(--texte);
+}
+
+.badge {
+  display: inline-block;
+  margin-top: 6px;
+  padding: 2px 8px;
+  border-radius: 999px;
+  font-size: 0.75rem;
+  background: var(--bleu-tres-clair);
+  color: var(--bleu);
+}
+
+.badge.enCours {
+  background: #fde7f0;
+  color: var(--rose-fonce);
+}
