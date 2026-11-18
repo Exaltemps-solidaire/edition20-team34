@@ -32,8 +32,8 @@
 }
 
 .topbarLogo {
-  width: 36px;
   height: 36px;
+  width: auto;
   flex-shrink: 0;
 }
 

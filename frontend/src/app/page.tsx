@@ -1,15 +1,18 @@
+import Image from "next/image";
 import Link from "next/link";
 import styles from "./page.module.css";
 import { donateurs, libelleStatut } from "@/lib/donateurs";
 
 function LogoI4M() {
   return (
-    <svg className={styles.topbarLogo} viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <circle cx="18" cy="18" r="18" fill="#E0ECFA" />
-      <ellipse cx="12" cy="15" rx="5" ry="3" fill="#11A2DD" transform="rotate(-30 12 15)" />
-      <ellipse cx="24" cy="15" rx="5" ry="3" fill="#EC64A0" transform="rotate(30 24 15)" />
-      <circle cx="18" cy="19" r="3" fill="#E64587" />
-    </svg>
+    <Image
+      className={styles.topbarLogo}
+      src="/logo.png"
+      alt="Imagine for Margo"
+      width={72}
+      height={36}
+      priority
+    />
   );
 }
 
