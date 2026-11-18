@@ -18,6 +18,29 @@
   color: var(--i4m-texte);
 }
 
+/* Tablette : plus de place, sans changer la mise en page mobile */
+@media (min-width: 768px) {
+  .screen {
+    max-width: 680px;
+    min-height: auto;
+    margin: 24px auto;
+    border-radius: 16px;
+    box-shadow: 0 4px 24px rgba(17, 162, 221, 0.15);
+    overflow: hidden;
+  }
+
+  .topbar {
+    border-radius: 16px 16px 0 0;
+  }
+}
+
+/* Desktop : conteneur encore plus large, liste en grille */
+@media (min-width: 1280px) {
+  .screen {
+    max-width: 1040px;
+  }
+}
+
 /* ── En-tête ── */
 .topbar {
   background: var(--i4m-blanc);
@@ -137,6 +160,21 @@
   gap: 16px;
 }
 
+@media (min-width: 768px) {
+  .main {
+    width: 100%;
+    max-width: 640px;
+    margin: 0 auto;
+    padding: 20px 24px 32px;
+  }
+}
+
+@media (min-width: 1280px) {
+  .main {
+    max-width: 880px;
+  }
+}
+
 /* ── KPI ── */
 .kpiRow {
   display: flex;
@@ -242,6 +280,18 @@
   display: flex;
   flex-direction: column;
   gap: 10px;
+}
+
+@media (min-width: 768px) {
+  .liste {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 12px;
+  }
+
+  .donateur {
+    height: 100%;
+  }
 }
 
 .donateur {
