@@ -56,7 +56,29 @@
 
 Le codage n'a pris que 2 minutes (contre 10 budgétées) : de la marge subsiste. L'itération 2 (vue 360 du donateur), déjà détaillée ci-dessus, reste le prochain objectif proposé, sans changement de priorité. Le temps restant sera redemandé au début de `/iteration 2`, comme le prévoit la section 8.
 
-## Itération 3 : La responsable collecte prépare la séquence du cycle court
+## Itération 3 : L'écran reprend fidèlement le style des maquettes (`/srv/team34/maquette/`)
+
+**Temps restant annoncé au début de cette itération** : 45 minutes. Capacité large (25 min minimum nécessaires).
+
+⚠️ **Insérée à la demande du développeur**, hors plan initial : demande explicite en cours de hackathon, priorisée devant la séquence du cycle (repoussée en itération 4). Les maquettes (`page1A.png`, `page1B.png`, `page2.png`) reprennent le style déjà présent dans `passation/prototype/index.html` (variables de couleur, cartes, badges), repris jusqu'ici seulement par approximation.
+
+- **Dans le périmètre** :
+  - Refonte de `frontend/src/app/page.module.css` sur les variables et classes exactes du prototype (bandeau bleu `--i4m-bleu`, cartes `--i4m-bleu-tres-clair`, alerte bordée rose `--i4m-rose-fonce`, badges pilule, avatars ronds alternant bleu/rose, police Poppins).
+  - Écran 1 (liste) : bandeau héros bleu avec libellé/titre/sous-titre et badge « 4 profils à traiter », cartes donateur avec avatar, badge pilule, flèche.
+  - Écran 2 (vue 360) : bandeau héros bleu avec statut, carte « Historique de don » en lignes info/valeur séparées par un filet.
+- **Hors périmètre** : la séquence du cycle (écran 3, repoussée en itération 4), la confirmation (écran 4), toute animation, le filigrane papillon décoratif (🦋 en CSS `::after`, repris tel quel si le temps le permet, sinon reporté).
+- **Critères d'acceptation** :
+  - Étant donné l'écran 1, quand il s'affiche, alors le bandeau héros, les cartes KPI et les cartes donateur reprennent les couleurs et la forme des maquettes `page1A.png`/`page1B.png`.
+  - Étant donné l'écran 2 (vue 360), quand il s'affiche, alors le bandeau héros et la carte « Historique de don » reprennent la forme de la maquette `page2.png`.
+  - Étant donné les deux écrans, quand on les compare au prototype retenu, alors aucune information affichée n'a changé (seul le style change).
+- **Hypothèse de l'équipe couverte** : aucune — tâche purement graphique, fidélité au prototype déjà validé par l'équipe.
+- **Codage estimé** : 10 minutes.
+- **Fichiers prévus** : `frontend/src/app/page.module.css`, `frontend/src/app/page.tsx`, `frontend/src/app/donateur/[id]/page.tsx`, `frontend/src/app/layout.tsx` (police Poppins) (4 fichiers, aucun test métier nouveau).
+- **Tests unitaires prévus** : aucun (pur balisage/CSS, DoD section 8 : « pas de test sur du balisage pur ») — les tests métier existants (`donateurs.test.ts`) ne sont pas affectés et doivent continuer à passer.
+- **Étapes ajoutées à la démo** : aucune de nouvelle — un ajustement a été nécessaire sur les étapes existantes (voir bilan).
+- **Bilan** : Codage réel : 2 minutes + 1 minute de correctif (texte/sémantique), bien sous le budget de 10. Les 3 critères d'acceptation sont satisfaits : bandeau héros bleu + cartes KPI + cartes donateur conformes à `page1A.png`/`page1B.png` ; bandeau héros + carte « Historique de don » conformes à `page2.png` (comparaison directe par capture d'écran Playwright, voir ci-dessous) ; aucune information affichée n'a changé, seul le style. Écart imprévu : le titre du bandeau héros reprend le texte exact du prototype (« Donateurs inactifs », pas « Donateurs à réactiver ») et doit rester un titre sémantique (`<h2>`) — la démo Playwright s'appuyait sur l'ancien texte/la perte du rôle `heading`, corrigée dans la foulée. Aucun test métier nouveau (pur CSS/balisage, conforme à la DoD) ; `npm test` passe toujours (2 api + 5 frontend, inchangé). Contrat de déployabilité : aucune borne, aucune alarme. Police Poppins ajoutée via `next/font/google` (remplace Geist, plus utilisé). Déployé (nouvelle image frontend) et vérifié visuellement par capture d'écran Playwright contre les maquettes. Commité et poussé. Version 3 signalée à PM Lab (`moteur_avance: false`). Rien de reporté.
+
+## Itération 4 : La responsable collecte prépare la séquence du cycle court
 
 - **Dans le périmètre** :
   - Depuis la vue 360, un lien « Préparer le cycle de réactivation » vers une nouvelle page `screen-3` du prototype : les 2 contacts (bilan d'impact à J+0, invitation unique à J+21), la mention événementielle si le donateur est habitué des événements caritatifs, la règle d'arrêt explicite.
