@@ -1,5 +1,7 @@
 import { describe, expect, it } from "vitest";
 import {
+  ENVOIS_MAX_CYCLE,
+  OBJECTIF_ENVOIS_SIX_SEMAINES,
   estEligibleReactivation,
   libelleStatut,
   mentionEvenementielle,
@@ -60,5 +62,11 @@ describe("messageInvitation", () => {
 describe("phrasesImpact", () => {
   it("mentionne le montant cumulé du donateur", () => {
     expect(phrasesImpact(claire)[0]).toContain("75 €");
+  });
+});
+
+describe("ENVOIS_MAX_CYCLE", () => {
+  it("reste bien en dessous de l'objectif de 6 semaines (H1)", () => {
+    expect(ENVOIS_MAX_CYCLE).toBeLessThan(OBJECTIF_ENVOIS_SIX_SEMAINES);
   });
 });

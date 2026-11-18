@@ -25,6 +25,8 @@ test("Démo : le cas passant", async ({ page }) => {
     await expect(page.getByText("Fin du cycle — arrêt complet")).toBeVisible();
     await page.getByText("Valider et lancer le cycle").click();
     await expect(page.getByRole("heading", { name: "Cycle lancé avec succès" })).toBeVisible();
+    await expect(page.getByText("Hypothèses vérifiables")).toBeVisible();
+    await expect(page.getByText("Outils consultés")).toBeVisible();
     await page.getByText("Retour à la liste").click();
     await expect(page.getByRole("heading", { name: "Donateurs inactifs" })).toBeVisible();
   });

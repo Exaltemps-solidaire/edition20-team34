@@ -590,3 +590,33 @@
 .impactRow:last-child {
   border-bottom: none;
 }
+
+/* ── Confirmation ── */
+.confirmIcon {
+  font-size: 48px;
+  text-align: center;
+}
+
+.confirmTitle {
+  font-size: 20px;
+  font-weight: 700;
+  text-align: center;
+}
+
+.confirmSub {
+  font-size: 13px;
+  color: var(--i4m-bleu);
+  text-align: center;
+  line-height: 1.5;
+}
+
+.cardPink {
+  background: rgba(230, 69, 135, 0.06);
+  border: 1.5px solid var(--i4m-rose-fonce);
+  border-radius: 12px;
+  padding: 14px 16px;
+}
+
+.cardPink .cardTitle {
+  color: var(--i4m-rose-fonce);
+}

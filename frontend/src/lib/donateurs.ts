@@ -139,3 +139,8 @@ export function messageInvitation(donateur: Donateur): string {
   const mention = mentionEvenementielle(donateur);
   return mention ? `${base} Nous espérons vous revoir au prochain événement ${donateur.source}.` : base;
 }
+
+// Hypothèses de l'équipe (cadrage/5-hypotheses.md) : cibles de la version, communes à tout cycle lancé.
+export const ENVOIS_MAX_CYCLE = 2;
+export const OBJECTIF_ENVOIS_SIX_SEMAINES = 9;
+export const OUTILS_CONSULTES = 1;
