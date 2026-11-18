@@ -6,4 +6,10 @@ test("Démo : le cas passant", async ({ page }) => {
     await page.goto("/");
     await expect(page.locator("body")).toBeVisible();
   });
+
+  await test.step("Je vois les donateurs à réactiver", async () => {
+    await expect(page.getByRole("heading", { name: "Donateurs à réactiver" })).toBeVisible();
+    await expect(page.getByText("Claire Beaumont")).toBeVisible();
+    await expect(page.getByText("Cycle en cours")).toBeVisible();
+  });
 });
