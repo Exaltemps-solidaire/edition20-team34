@@ -121,6 +121,8 @@ Le codage n'a pris que 2 minutes (contre 10 budgétées) : de la marge subsiste.
 
 ## Itération 6 : La vue 360 affiche le profil, les événements et l'impact des dons
 
+**Temps restant annoncé au début de cette itération** : 30 minutes. Ne permet qu'une seule itération confortablement (25 min minimum chacune) : l'itération 7 attendra la prochaine mesure du temps restant.
+
 ⚠️ **Insérée à la demande du développeur**, sur la base de la maquette `page2B.png` : complète la vue 360 (écran 2), simplifiée en itération 2 par manque de temps.
 
 - **Dans le périmètre** : sur la vue 360, après l'historique de don, ajouter : les puces « Profil & porte d'entrée » (ex. type de don, habitué des événements), la liste des événements auxquels le donateur a participé (nom, date, origine IfM/Externe), la carte « Impact de ses dons » (2-3 phrases fictives liées au montant cumulé).
@@ -134,13 +136,15 @@ Le codage n'a pris que 2 minutes (contre 10 budgétées) : de la marge subsiste.
 - **Fichiers prévus** : extension de `frontend/src/lib/donateurs.ts` (champs profil/événements/impact), `frontend/src/app/donateur/[id]/page.tsx`, CSS associé (≈3 fichiers).
 - **Tests unitaires prévus** : 1 à 3, si une règle de calcul s'y prête (ex. formatage de la liste d'événements) ; sinon le signaler (pur balisage, pas de test).
 - **Étapes ajoutées à la démo** : aucune (vue 360 déjà couverte par l'itération 2).
-- **Bilan** : _à remplir en fin d'itération (durée de codage réelle, dépassement éventuel, fait, reporté)_
+- **Bilan** : Codage réel : 2 minutes, bien sous le budget de 10. Les 3 critères d'acceptation sont satisfaits : puces de profil, liste d'événements (avec origine IfM/Externe) et carte « Impact de ses dons » affichées sous l'historique, pour les 4 donateurs. 1 test Vitest ajouté (`phrasesImpact` mentionne le montant cumulé), `npm test` passe (2 api + 8 frontend). Contrat de déployabilité : aucune borne, aucune alarme. Vérifié visuellement par capture d'écran, conforme à `page2B.png`. Démo Playwright inchangée (déjà couverte). Commité, poussé, version 6 signalée à PM Lab (`moteur_avance: false`). Rien de reporté.
 
 ## Itération 7 : La confirmation du lancement affiche le récapitulatif et les indicateurs
 
 Basée sur la maquette `page4.png` (`screen-4` du prototype).
 
-- **Dans le périmètre** : depuis la séquence du cycle (itération 5), le bouton « Valider et lancer le cycle » mène à un écran de confirmation : message de succès, récapitulatif (donateur, statut des 2 messages, envois max, isolation), carte « Hypothèses vérifiables » avec les 3 indicateurs (envois/6 semaines, envois après invitation, outils consultés), bouton retour à la liste.
+⚠️ **Maquette `page5.png` reçue** : confirme le détail de `page4.png` et ajoute un second bouton, « Revoir le profil de <donateur> », sous « Retour à la liste ».
+
+- **Dans le périmètre** : depuis la séquence du cycle (itération 5), le bouton « Valider et lancer le cycle » mène à un écran de confirmation : message de succès, récapitulatif (donateur, statut des 2 messages, envois max, isolation), carte « Hypothèses vérifiables » avec les 3 indicateurs (envois/6 semaines, envois après invitation, outils consultés), bouton primaire « Retour à la liste » et bouton secondaire « Revoir le profil de <donateur> » vers la vue 360.
 - **Hors périmètre** : tout envoi réel, toute persistance du lancement (actualiser la page réinitialise l'état).
 - **Critères d'acceptation** :
   - Étant donné la séquence validée, quand on clique « Valider et lancer le cycle », alors l'écran de confirmation s'affiche avec le nom du donateur.
