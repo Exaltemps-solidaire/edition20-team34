@@ -140,6 +140,8 @@ Le codage n'a pris que 2 minutes (contre 10 budgétées) : de la marge subsiste.
 
 ## Itération 7 : La confirmation du lancement affiche le récapitulatif et les indicateurs
 
+**Temps restant annoncé au début de cette itération** : 30 minutes. Capacité suffisante (25 min minimum nécessaires).
+
 Basée sur la maquette `page4.png` (`screen-4` du prototype).
 
 ⚠️ **Maquette `page5.png` reçue** : confirme le détail de `page4.png` et ajoute un second bouton, « Revoir le profil de <donateur> », sous « Retour à la liste ».
@@ -155,7 +157,9 @@ Basée sur la maquette `page4.png` (`screen-4` du prototype).
 - **Fichiers prévus** : `frontend/src/app/donateur/[id]/cycle/confirmation/page.tsx` (ou équivalent), lien depuis la page cycle, CSS associé (≈3 fichiers).
 - **Tests unitaires prévus** : 1 à 3, sur le calcul des indicateurs si une logique existe (sinon, pur affichage de constantes connues : 2 envois max, 0 après invitation, 1 outil).
 - **Étapes ajoutées à la démo** : depuis la séquence, valider le cycle, vérifier l'affichage des indicateurs, revenir à la liste.
-- **Bilan** : _à remplir en fin d'itération (durée de codage réelle, dépassement éventuel, fait, reporté)_
+- **Bilan** : Codage réel : 1 minute, bien sous le budget de 10. Les 3 critères d'acceptation sont satisfaits : confirmation avec nom du donateur ; 3 indicateurs affichés avec leur objectif (< 9, 0, 1) ; bouton « Retour à la liste » fonctionnel, plus le bouton secondaire « Revoir le profil de <prénom> » (ajout de `page5.png`). 1 test Vitest ajouté (invariant `ENVOIS_MAX_CYCLE < OBJECTIF_ENVOIS_SIX_SEMAINES`), `npm test` passe (2 api + 9 frontend). Contrat de déployabilité : aucune borne, aucune alarme. Vérifié visuellement par capture d'écran, conforme à `page4.png`/`page5.png`. Démo Playwright étendue (vérifie les indicateurs affichés). Commité, poussé, version 7 signalée à PM Lab (`moteur_avance: false`). Rien de reporté.
+
+**Les 4 écrans du prototype retenu sont maintenant construits** (liste, vue 360, séquence du cycle, confirmation), avec la charte graphique et le logo officiel.
 
 ## À venir (non détaillé, ordre de priorité du plan de livraison de l'équipe)
 
