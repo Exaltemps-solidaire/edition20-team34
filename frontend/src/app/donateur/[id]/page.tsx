@@ -7,6 +7,17 @@ export function generateStaticParams() {
   return donateurs.map((donateur) => ({ id: donateur.id }));
 }
 
+function LogoI4M() {
+  return (
+    <svg className={styles.topbarLogo} viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <circle cx="18" cy="18" r="18" fill="#E0ECFA" />
+      <ellipse cx="12" cy="15" rx="5" ry="3" fill="#11A2DD" transform="rotate(-30 12 15)" />
+      <ellipse cx="24" cy="15" rx="5" ry="3" fill="#EC64A0" transform="rotate(30 24 15)" />
+      <circle cx="18" cy="19" r="3" fill="#E64587" />
+    </svg>
+  );
+}
+
 export default async function VueDonateur({ params }: { params: Promise<{ id: string }> }) {
   const { id } = await params;
   const donateur = trouverDonateur(id);
@@ -15,41 +26,75 @@ export default async function VueDonateur({ params }: { params: Promise<{ id: st
   }
 
   return (
-    <div className={styles.page}>
+    <div className={styles.screen}>
       <header className={styles.topbar}>
-        <h1 className={styles.topbarTitle}>Vue 360 · {donateur.nom}</h1>
-        <Link href="/" className={styles.topbarSub}>
+        <LogoI4M />
+        <div>
+          <div className={styles.topbarTitle}>Vue 360 · donateur</div>
+          <div className={styles.topbarSub}>Données pour personnaliser le cycle</div>
+        </div>
+        <Link href="/" className={styles.backBtn}>
           ‹ Retour
         </Link>
       </header>
+
+      <div className={styles.hero}>
+        <div className={styles.heroLabel}>Profil donateur</div>
+        <h2 className={styles.heroName}>{donateur.nom}</h2>
+        <div className={styles.heroMeta}>Entrée en base · {donateur.historique.premierDon}</div>
+        <div
+          className={
+            donateur.statut.type === "enCours"
+              ? `${styles.statusBadge} ${styles.actif}`
+              : `${styles.statusBadge} ${styles.inactif}`
+          }
+        >
+          <span className={styles.dot} />
+          {donateur.statut.type === "enCours" ? libelleStatut(donateur.statut) : `À réactiver · ${libelleStatut(donateur.statut)}`}
+        </div>
+      </div>
+
       <main className={styles.main}>
-        <h2>{donateur.nom}</h2>
-        <span className={donateur.statut.type === "enCours" ? `${styles.badge} ${styles.enCours}` : styles.badge}>
-          {libelleStatut(donateur.statut)}
-        </span>
-
-        <div className={styles.kpiRow}>
-          <div className={styles.kpiCard}>
-            <div className={styles.kpiValue}>{donateur.historique.nombreDons}</div>
-            <div className={styles.kpiLabel}>Dons au total</div>
+        <div className={styles.card}>
+          <div className={styles.cardTitle}>Historique de don</div>
+          <div className={styles.infoRow}>
+            <span className={styles.infoLabel}>Nombre de dons</span>
+            <span className={`${styles.infoValue} ${styles.blue}`}>
+              {donateur.historique.nombreDons} dons au total
+            </span>
           </div>
-          <div className={styles.kpiCard}>
-            <div className={`${styles.kpiValue} ${styles.pink}`}>
+          <div className={styles.infoRow}>
+            <span className={styles.infoLabel}>Premier don</span>
+            <span className={styles.infoValue}>{donateur.historique.premierDon}</span>
+          </div>
+          <div className={styles.infoRow}>
+            <span className={styles.infoLabel}>Montant cumulé</span>
+            <span className={`${styles.infoValue} ${styles.blue}`}>
+              {donateur.historique.nombreDons} × {donateur.historique.donMoyen} € ={" "}
               {montantCumule(donateur.historique)} €
-            </div>
-            <div className={styles.kpiLabel}>Montant cumulé</div>
+            </span>
+          </div>
+          <div className={styles.infoRow}>
+            <span className={styles.infoLabel}>Don moyen</span>
+            <span className={`${styles.infoValue} ${styles.blue}`}>{donateur.historique.donMoyen} €</span>
+          </div>
+          <div className={styles.infoRow}>
+            <span className={styles.infoLabel}>Dernier don</span>
+            <span className={`${styles.infoValue} ${styles.highlight}`}>{donateur.dernierDon}</span>
+          </div>
+          <div className={styles.infoRow}>
+            <span className={styles.infoLabel}>Raison du dernier don</span>
+            <span className={styles.infoValue}>{donateur.raison}</span>
+          </div>
+          <div className={styles.infoRow}>
+            <span className={styles.infoLabel}>Source principale</span>
+            <span className={styles.infoValue}>{donateur.source}</span>
           </div>
         </div>
-
-        <div className={styles.detail}>Premier don · {donateur.historique.premierDon}</div>
-        <div className={styles.detail}>
-          Dernier don · {donateur.dernierDon} · {donateur.source}
-        </div>
-        <div className={styles.detail}>Raison du dernier don : {donateur.raison}</div>
 
         <div className={styles.alertBox}>
-          {donateur.nom} est isolé(e) du flux général depuis la détection du seuil : aucune
-          campagne de fin d&apos;année ni relance habituelle ne lui sera adressée.
+          <strong>{donateur.nom}</strong> est isolé(e) du flux général depuis la détection du
+          seuil : aucune campagne de fin d&apos;année ni relance habituelle ne lui sera adressée.
         </div>
       </main>
     </div>
